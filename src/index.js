@@ -1,9 +1,13 @@
-// import "./index.css";
-// import validator from "validator"; // [BAD PRACTICE] the bundel will have a big size
-import validator from "validator/lib/isEmail";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
 
-console.log("hello llll");
+const root = ReactDOM.createRoot(document.getElementById("root"));
 
-document.querySelector("h1").innerText = process.env.NODE_ENV;
-
-document.querySelector("h2").innerText = validator.isEmail("mourad@mail.co");
+root.render(
+    <>
+        <React.StrictMode>
+            <App />
+        </React.StrictMode>
+    </>
+);
