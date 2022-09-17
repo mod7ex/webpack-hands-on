@@ -51,6 +51,10 @@ const config = {
             {
                 test: /\.css$/,
                 use: ["style-loader", "css-loader"],
+                /**
+                    css-loader helps parsing the css files
+                    whereas style-loader injects the styles in to the document
+                */
             },
         ],
     },
