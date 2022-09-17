@@ -1,6 +1,10 @@
 const path = require("path");
 
+const mode = process.env.NODE_ENV || "development";
+
 const config = {
+    mode,
+
     entry: {
         main: ["./src/bootstrap.js"], // in case of many files
     },
@@ -54,7 +58,7 @@ module.exports = (env, argv) => {
     }
 
     if (argv.mode === "production") {
-        //...
+        config.target = "browserslist"; // default is 'web'
     }
 
     return config;

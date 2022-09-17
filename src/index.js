@@ -1,5 +1,6 @@
 // import "./index.css";
-import validator from "validator";
+// import validator from "validator"; // [BAD PRACTICE] the bundel will have a big size
+import validator from "validator/lib/isEmail";
 
 console.log("hello llll");
 
