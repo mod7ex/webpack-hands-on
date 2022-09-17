@@ -26,7 +26,7 @@ const config = {
         client: {
             overlay: {
                 errors: true,
-                warnings: false,
+                warnings: true,
             },
         },
     },
