@@ -38,15 +38,19 @@ const config = {
     module: {
         rules: [
             {
+                test: /\.(js|jsx)$/,
+                exclude: /(node_modules)/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: ["@babel/preset-env", "@babel/preset-react"],
+                    },
+                },
+            },
+
+            {
                 test: /\.css$/,
-                use: [
-                    {
-                        loader: "style-loader",
-                    },
-                    {
-                        loader: "css-loader",
-                    },
-                ],
+                use: ["style-loader", "css-loader"],
             },
         ],
     },
@@ -58,7 +62,7 @@ module.exports = (env, argv) => {
     }
 
     if (argv.mode === "production") {
-        config.target = "browserslist"; // default is 'web'
+        // ...
     }
 
     return config;
