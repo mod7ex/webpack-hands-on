@@ -1,9 +1,16 @@
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 
-const mode = process.env.NODE_ENV || "development";
+const CMD = {
+    DEV: "dev",
+    BUILD: "build",
+};
+
+const npmCMD = process.env.npm_lifecycle_event;
 
 const config = {
-    mode,
+    mode: process.env.NODE_ENV || "development",
 
     entry: {
         main: ["./src/bootstrap.js"], // in case of many files
@@ -11,9 +18,7 @@ const config = {
 
     output: {
         path: path.resolve(__dirname, "dist"),
-        // filename: '[name]-[hash:8]-bundel.js',
-        filename: "[name]-bundel.js",
-        publicPath: "/",
+        filename: "[name]-[contenthash]-bundel.js",
     },
 
     // watch: true, // no need for this in case of devServer
@@ -35,6 +40,8 @@ const config = {
         },
     },
 
+    devtool: npmCMD === CMD.DEV ? "source-map" : false,
+
     module: {
         rules: [
             {
@@ -49,8 +56,12 @@ const config = {
             },
 
             {
-                test: /\.scss$/,
-                use: ["style-loader", "css-loader", "sass-loader"],
+                test: /\.s[ac]ss$/i,
+                use: [
+                    npmCMD === CMD.BUILD ? MiniCssExtractPlugin.loader : "style-loader", // on build we want to extract css into files check down for more details
+                    "css-loader",
+                    "sass-loader",
+                ],
                 /**
                     css-loader helps parsing the css files
                     whereas style-loader injects the styles in to the document
@@ -58,7 +69,31 @@ const config = {
             },
         ],
     },
+
+    plugins: [
+        new HtmlWebpackPlugin({
+            template: "./public/index.html",
+        }),
+    ],
 };
+
+if (npmCMD === CMD.BUILD) {
+    config.mode = "production";
+
+    (config.plugins || (config.plugins = [])).push(
+        // extracting css files
+        new MiniCssExtractPlugin({
+            // same name as input files ---> main
+            filename: "[name]-[contenthash]-bundel.css",
+        })
+    );
+}
+
+module.exports = config;
+
+/*
+
+// we can get same variable <npmCMD> from the following function (argv)
 
 module.exports = (env, argv) => {
     if (argv.mode === "development") {
@@ -71,3 +106,5 @@ module.exports = (env, argv) => {
 
     return config;
 };
+
+*/
