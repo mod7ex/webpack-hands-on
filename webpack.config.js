@@ -1,5 +1,7 @@
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { DefinePlugin, HotModuleReplacementPlugin } = require("webpack");
 const path = require("path");
 
 const npmScript = process.env.npm_lifecycle_event;
@@ -48,7 +50,7 @@ const config = {
     module: {
         rules: [
             {
-                test: /\.(ts|tsx)?$/,
+                test: /\.((ts|js)x?)?$/,
                 exclude: /node_modules/,
                 use: "babel-loader",
             },
@@ -68,8 +70,13 @@ const config = {
             },
             {
                 // this is built-in into WebPack
-                test: /\.(png|jpe?g|gif|svg)$/i,
+                test: /\.(?:ico|png|jpe?g|gif)$/i,
                 type: "asset/resource",
+            },
+            {
+                // this is built-in into WebPack
+                test: /\.(woff(2)?|eot|ttf|otf|svg)$/i,
+                type: "asset/inline",
             },
         ],
     },
@@ -82,19 +89,22 @@ const config = {
         new HtmlWebpackPlugin({
             template: "./public/index.html",
         }),
+        new DefinePlugin({
+            "process.env.name": "Hello Mourad, a env var from webpack",
+        }),
     ],
 };
 
 if (IS_PROD) {
-    config.target = "es5";
-
     (config.plugins || (config.plugins = [])).push(
-        // extracting css files
         new MiniCssExtractPlugin({
+            // extracting css files
             // same name as input files ---> main
             filename: "[name]-[contenthash]-bundel.css",
         })
     );
+} else {
+    (config.plugins || (config.plugins = [])).push(new ReactRefreshWebpackPlugin(), new HotModuleReplacementPlugin());
 }
 
 module.exports = config;
