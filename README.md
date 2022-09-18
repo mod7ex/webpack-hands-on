@@ -1,6 +1,8 @@
 ## try `source-map-loader`
 
-## HTML template [Fixed]
+## try `file url`
+
+## [NEEDED] type checking + Error-overlay
 
 ## add this to the `.vscode/settings.json` config folder (to have jsx autocompletion in js file)
 
@@ -12,4 +14,6 @@
 
 ```
 
-## [FIX]: `"@pmmmwh/react-refresh-webpack-plugin"` didn't work
+## [Fix]: https://github.com/pmmmwh/react-refresh-webpack-plugin didn't work
+
+## [Fix] [webpack-dev-server] "hot: true" automatically applies HMR plugin, you don't have to add it manually to your webpack configuration.

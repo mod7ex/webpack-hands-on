@@ -3,16 +3,16 @@ $black: black;
 $white: white;
 
 h1 {
-    background-color: $black;
-    color: $white;
+   background-color: $black;
+   color: $white;
 }
 
 input::placeholder {
-    color: blue;
-    font-size: 1.2em;
-    font-style: italic;
+   color: blue;
+   font-size: 1.2em;
+   font-style: italic;
 }
 
 .hero {
-    background-image: url("./assets//img/image.jpg");
+   background-image: url('./assets//img/image.jpg');
 }
