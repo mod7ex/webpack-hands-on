@@ -1,7 +1,10 @@
 {
     "presets": [
+        /*
+            [ "@babel/preset-env", { useBuiltIns: "usage", corejs: 3, targets: "defaults" } ]
+        */
         "@babel/preset-env",
-        "@babel/preset-react"
-        // ["@babel/preset-env", { useBuiltIns: "usage", corejs: 3, targets: "defaults" }], "@babel/preset-react",
+        ["@babel/preset-react", { "runtime": "automatic" }],
+        "@babel/preset-typescript"
     ]
 }

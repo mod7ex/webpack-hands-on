@@ -33,6 +33,8 @@ const config = {
 
         hot: true,
 
+        open: true,
+
         client: {
             overlay: {
                 errors: true,
@@ -46,28 +48,34 @@ const config = {
     module: {
         rules: [
             {
-                test: /\.(ts|tsx)$/,
+                test: /\.(ts|tsx)?$/,
                 exclude: /node_modules/,
-                use: ["babel-loader", "ts-loader"],
+                use: "babel-loader",
             },
 
             {
                 test: /\.s[ac]ss$/i,
                 use: [
-                    IS_BUILD_DEV || IS_PROD ? MiniCssExtractPlugin.loader : "style-loader", // on build we want to extract css into files check down for more details
+                    IS_BUILD_DEV || IS_PROD ? { loader: MiniCssExtractPlugin.loader, options: { publicPath: "" } } : "style-loader", // on build we want to extract css into files check down for more details
                     "css-loader",
                     "sass-loader",
                 ],
-                /**
+                /*
                     css-loader helps parsing the css files
                     whereas style-loader injects the styles in to the document
+                    and <MiniCssExtractPlugin> extracts it into separate files
                 */
+            },
+            {
+                // this is built-in into WebPack
+                test: /\.(png|jpe?g|gif|svg)$/i,
+                type: "asset/resource",
             },
         ],
     },
 
     resolve: {
-        extensions: [".tsx", ".ts", ".js", ".jsx"], // resolve imports without file extensions
+        extensions: [".tsx", ".ts", ".js", ".jsx"], // resolve imports without file extensions ,add the <?> to the test(regex) to make the extension optional
     },
 
     plugins: [
