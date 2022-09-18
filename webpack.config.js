@@ -2,18 +2,19 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 
-const CMD = {
-    DEV: "dev",
-    BUILD: "build",
-};
+const npmScript = process.env.npm_lifecycle_event;
 
-const npmCMD = process.env.npm_lifecycle_event;
+const mode = process.env.NODE_ENV || "development";
+
+const IS_BUILD_DEV = npmScript === "build-dev";
+const IS_PROD = mode === "production";
+const IS_DEV = !IS_PROD;
 
 const config = {
-    mode: process.env.NODE_ENV || "development",
+    mode,
 
     entry: {
-        main: ["./src/bootstrap.js"], // in case of many files
+        main: ["./src/bootstrap.ts"], // array in case of many files
     },
 
     output: {
@@ -40,26 +41,20 @@ const config = {
         },
     },
 
-    devtool: npmCMD === CMD.DEV ? "source-map" : false,
+    devtool: IS_DEV ? "source-map" : false,
 
     module: {
         rules: [
             {
-                test: /\.(js|jsx)$/,
-                exclude: /(node_modules)/,
-                use: {
-                    loader: "babel-loader",
-                    options: {
-                        // presets: ["@babel/preset-env", "@babel/preset-react"],
-                        presets: [["@babel/preset-env", { useBuiltIns: "usage", corejs: 3, targets: "defaults" }], "@babel/preset-react"],
-                    },
-                },
+                test: /\.(ts|tsx)$/,
+                exclude: /node_modules/,
+                use: ["babel-loader", "ts-loader"],
             },
 
             {
                 test: /\.s[ac]ss$/i,
                 use: [
-                    npmCMD === CMD.BUILD ? MiniCssExtractPlugin.loader : "style-loader", // on build we want to extract css into files check down for more details
+                    IS_BUILD_DEV || IS_PROD ? MiniCssExtractPlugin.loader : "style-loader", // on build we want to extract css into files check down for more details
                     "css-loader",
                     "sass-loader",
                 ],
@@ -71,6 +66,10 @@ const config = {
         ],
     },
 
+    resolve: {
+        extensions: [".tsx", ".ts", ".js", ".jsx"], // resolve imports without file extensions
+    },
+
     plugins: [
         new HtmlWebpackPlugin({
             template: "./public/index.html",
@@ -78,8 +77,8 @@ const config = {
     ],
 };
 
-if (npmCMD === CMD.BUILD) {
-    config.mode = "production";
+if (IS_PROD) {
+    config.target = "es5";
 
     (config.plugins || (config.plugins = [])).push(
         // extracting css files
@@ -94,7 +93,7 @@ module.exports = config;
 
 /*
 
-// we can get same variable <npmCMD> from the following function (argv)
+// we can get same variable <npmScript> from the following function (argv)
 
 module.exports = (env, argv) => {
     if (argv.mode === "development") {
