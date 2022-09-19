@@ -1,8 +1,8 @@
 import isEmail from 'validator/lib/isEmail';
-import Giphy from './assets/img/giphy.gif';
-import EYE from './assets/svg/eye.svg';
-import IMAGE from './assets/img/image.jpg';
-import Counter from './components/Counter';
+import Giphy from '~/assets/img/giphy.gif';
+import EYE from '~/assets/svg/eye.svg';
+import IMAGE from '~/assets/img/image.jpg';
+import Counter from '@/Counter';
 
 // const NAME = process.env.name;
 

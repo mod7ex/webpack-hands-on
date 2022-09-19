@@ -14,6 +14,4 @@
 
 ```
 
-## [Fix]: https://github.com/pmmmwh/react-refresh-webpack-plugin didn't work
-
-## [Fix] [webpack-dev-server] "hot: true" automatically applies HMR plugin, you don't have to add it manually to your webpack configuration.
+## try https://github.com/TypeStrong/fork-ts-checker-webpack-plugin

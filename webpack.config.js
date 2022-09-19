@@ -2,7 +2,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { DefinePlugin, HotModuleReplacementPlugin } = require('webpack');
+const { DefinePlugin /* HotModuleReplacementPlugin */ } = require('webpack');
 const path = require('path');
 
 const npmScript = process.env.npm_lifecycle_event;
@@ -34,11 +34,13 @@ const config = {
 
       port: 9000,
 
-      // hot: true,
+      hot: true,
 
       open: true,
 
       client: {
+         progress: true,
+
          overlay: {
             errors: true,
             warnings: true,
@@ -89,6 +91,11 @@ const config = {
 
    resolve: {
       extensions: ['.tsx', '.ts', '.js', '.jsx'], // resolve imports without file extensions ,add the <?> to the test(regex) to make the extension optional
+
+      alias: {
+         '~': path.resolve(__dirname, 'src'),
+         '@': path.resolve(__dirname, 'src/components'),
+      },
    },
 
    plugins: [
@@ -112,7 +119,7 @@ if (IS_PROD) {
 } else {
    (config.plugins || (config.plugins = [])).push(
       new ReactRefreshWebpackPlugin(),
-      new HotModuleReplacementPlugin(),
+      // new HotModuleReplacementPlugin(), // automatically applied if { hot: true }
       new BundleAnalyzerPlugin()
    );
 }
