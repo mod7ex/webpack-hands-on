@@ -71,10 +71,10 @@ const config = {
                'sass-loader',
             ],
             /*
-                    css-loader helps parsing the css files
-                    whereas style-loader injects the styles in to the document
-                    and <MiniCssExtractPlugin> extracts it into separate files
-                */
+               css-loader helps parsing the css files
+               whereas style-loader injects the styles in to the document
+               and <MiniCssExtractPlugin> extracts it into separate files
+            */
          },
          {
             // this is built-in into WebPack

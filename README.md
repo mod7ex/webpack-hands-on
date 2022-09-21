@@ -1,5 +1,7 @@
 ## try `source-map-loader`
 
+## try `babel-preset-react-app` && https://www.npmjs.com/package/fork-ts-checker-webpack-plugin
+
 ## try `file url`
 
 ## [NEEDED] type checking + Error-overlay

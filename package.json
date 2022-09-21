@@ -2,6 +2,7 @@
    "private": true,
    "main": "index.js",
    "scripts": {
+      "watch:ts": "tsc --watch --noEmit --project './tsconfig.json'",
       "dev": "tsc && NODE_ENV=development webpack-dev-server",
       "build": "rm -Rf dist && NODE_ENV=production webpack",
       "build-dev": "rm -Rf dist && NODE_ENV=development webpack",

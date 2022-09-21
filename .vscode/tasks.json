@@ -1,0 +1,16 @@
+{
+   "version": "2.0.0",
+   "tasks": [
+      {
+         "label": "watch typescript errors",
+         "type": "npm",
+         "script": "watch:ts",
+         "problemMatcher": "$tsc-watch",
+         "isBackground": true,
+         "presentation": {
+            "reveal": "always",
+            "revealProblems": "onProblem"
+         }
+      }
+   ]
+}
