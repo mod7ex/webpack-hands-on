@@ -8,6 +8,7 @@ import Counter from '@/Counter';
 
 const App = () => {
    const how = 'hello'; // ESlint works (:
+   // const how: number = 'hello';
 
    return (
       <>

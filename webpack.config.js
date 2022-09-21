@@ -1,8 +1,9 @@
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const { DefinePlugin /* HotModuleReplacementPlugin */ } = require('webpack');
+const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { DefinePlugin /* HotModuleReplacementPlugin */ } = require('webpack');
 const path = require('path');
 
 const npmScript = process.env.npm_lifecycle_event;
@@ -120,7 +121,8 @@ if (IS_PROD) {
    (config.plugins || (config.plugins = [])).push(
       new ReactRefreshWebpackPlugin(),
       // new HotModuleReplacementPlugin(), // automatically applied if { hot: true }
-      new BundleAnalyzerPlugin()
+      new BundleAnalyzerPlugin(),
+      new ForkTsCheckerWebpackPlugin()
    );
 }
 
